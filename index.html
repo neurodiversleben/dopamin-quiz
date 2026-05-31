@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Welcher Treibstoff fehlt deinem Gehirn? - Neurodiversleben</title>
+<meta name="description" content="Ein kurzer Selbst-Check für neurodivergente Gehirne. Keine Diagnose, keine Bewertung. Nur ein Spiegel. In 60 Sekunden." />
+
+<!-- Gleiche Fonts wie die Landingpage: Syne (Display) + Epilogue (Body) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Epilogue:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+
+<style>
+  /* ============================================================
+     FARBEN: 1:1 aus deiner Landingpage übernommen
+     ============================================================ */
+  :root{
+    --bg:           #f2f0eb;   /* warmes Cremeweiß */
+    --ink:          #18160f;   /* dunkle Tinte */
+    --muted:        #6b6658;   /* gedämpfter Text */
+    --rule:         #ddd9d0;   /* Linien/Ränder */
+    --purple:       #5b2d8e;   /* Hauptakzent */
+    --purple-light: #e8dff5;   /* helles Lila (Flächen) */
+    --purple-dark:  #4a2278;   /* Hover */
+    --lime:         #c8e832;   /* Signalfarbe */
+    --lime-dark:    #a5c020;
+    --white:        #ffffff;
+    --maxw: 640px;
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Epilogue', sans-serif;
+    font-weight:300;
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+    overflow-x:hidden;
+  }
+
+  .wrap{
+    position:relative;
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:clamp(28px,6vw,64px) clamp(20px,5vw,32px) 80px;
+    min-height:100vh;
+    display:flex; flex-direction:column; justify-content:center;
+  }
+
+  /* Label im Stil der .section-label */
+  .label{
+    font-size:.68rem; letter-spacing:.2em; text-transform:uppercase;
+    font-weight:500; color:var(--purple); margin-bottom:1.2rem;
+  }
+
+  h1{
+    font-family:'Syne', sans-serif; font-weight:800;
+    font-size:clamp(2.2rem,6.5vw,3.4rem); line-height:1.05;
+    letter-spacing:-.02em; margin-bottom:1.1rem;
+  }
+  h1 em{ font-style:normal; color:var(--purple); }
+
+  .lede{ color:var(--muted); font-size:1.08rem; max-width:36ch; font-weight:300; }
+
+  /* progress */
+  .progress{ display:flex; gap:6px; margin-bottom:2rem; }
+  .progress span{
+    height:3px; flex:1; background:var(--rule);
+    transition:background .4s ease;
+  }
+  .progress span.done{ background:var(--purple); }
+
+  /* steps */
+  .step{ display:none; animation:fadeUp .5s .05s both; }
+  .step.active{ display:block; }
+  @keyframes fadeUp{ from{opacity:0; transform:translateY(16px);} to{opacity:1; transform:none;} }
+
+  .qnum{ font-size:.68rem; letter-spacing:.2em; text-transform:uppercase; font-weight:500; color:var(--muted); margin-bottom:1rem; }
+  .qtext{ font-family:'Syne',sans-serif; font-weight:700; font-size:clamp(1.4rem,4.5vw,1.9rem); line-height:1.15; margin-bottom:1.6rem; letter-spacing:-.01em; }
+
+  .options{ display:flex; flex-direction:column; gap:10px; }
+  .opt{
+    position:relative; text-align:left; cursor:pointer;
+    background:var(--white); border:1.5px solid var(--rule);
+    border-radius:2px; padding:1rem 1.1rem; color:var(--ink);
+    font-size:1.02rem; font-family:'Epilogue',sans-serif; font-weight:400; line-height:1.45;
+    transition:border-color .18s, background .18s, transform .12s;
+    display:flex; align-items:center; gap:14px;
+  }
+  .opt:hover{ border-color:var(--purple); }
+  .opt:active{ transform:scale(.99); }
+  .opt .dot{
+    width:18px; height:18px; flex:none; border-radius:50%;
+    border:2px solid var(--rule); transition:.18s; position:relative;
+  }
+  .opt.sel{ border-color:var(--purple); background:var(--purple-light); }
+  .opt.sel .dot{ border-color:var(--purple); background:var(--purple); }
+  .opt.sel .dot::after{ content:""; position:absolute; inset:4px; border-radius:50%; background:var(--white); }
+
+  .hint{ color:var(--muted); font-size:.86rem; margin-top:1.2rem; font-weight:300; }
+
+  .nav{ display:flex; align-items:center; justify-content:space-between; margin-top:1.8rem; gap:14px; }
+  .back{
+    background:none; border:none; color:var(--muted); font-family:'Epilogue',sans-serif;
+    font-size:.92rem; cursor:pointer; padding:8px 0; transition:color .2s;
+  }
+  .back:hover{ color:var(--ink); }
+  .back[hidden]{ visibility:hidden; }
+
+  /* Buttons im Stil .btn-primary (lila) */
+  .btn{
+    appearance:none; border:none; cursor:pointer; font-family:'Epilogue',sans-serif;
+    background:var(--purple); color:var(--white); font-weight:500; font-size:1rem;
+    letter-spacing:.04em; padding:1rem 2rem; border-radius:2px;
+    transition:background .2s, transform .15s;
+  }
+  .btn:hover{ background:var(--purple-dark); transform:translateY(-2px); }
+  .btn:disabled{ background:var(--rule); color:var(--muted); cursor:not-allowed; transform:none; }
+
+  /* Limetten-Button für den finalen CTA */
+  .btn-lime{
+    appearance:none; border:none; cursor:pointer; font-family:'Epilogue',sans-serif;
+    background:var(--lime); color:var(--ink); font-weight:500; font-size:1rem;
+    letter-spacing:.04em; padding:1rem 2rem; border-radius:2px;
+    transition:background .2s, transform .15s;
+  }
+  .btn-lime:hover{ background:var(--lime-dark); transform:translateY(-2px); }
+
+  /* result */
+  #result .badge{
+    display:inline-block; font-size:.68rem; letter-spacing:.2em; text-transform:uppercase;
+    font-weight:500; color:var(--purple); margin-bottom:1rem;
+  }
+  #result .rtitle{
+    font-family:'Syne',sans-serif; font-weight:800; font-size:clamp(1.9rem,6vw,2.8rem);
+    line-height:1.05; letter-spacing:-.02em; margin-bottom:1.1rem;
+  }
+  #result .rtitle em{ font-style:normal; color:var(--purple); }
+  #result .rbody{ color:var(--muted); font-size:1.08rem; margin-bottom:6px; font-weight:300; }
+  #result .rbody strong{ color:var(--ink); font-weight:500; }
+
+  /* CTA-Karte: dunkler Block wie die cta-section der Landingpage */
+  .card{
+    background:var(--ink); color:var(--bg);
+    border-radius:2px; padding:clamp(24px,5vw,34px); margin-top:2rem;
+  }
+  .card .card-label{ font-size:.68rem; letter-spacing:.2em; text-transform:uppercase; font-weight:500; color:var(--lime); margin-bottom:1rem; }
+  .card h3{ font-family:'Syne',sans-serif; font-weight:700; font-size:1.4rem; line-height:1.1; margin-bottom:.6rem; color:var(--white); }
+  .card p{ color:rgba(242,240,235,.75); font-size:.98rem; margin-bottom:1.4rem; font-weight:300; }
+
+  .ml-field{ width:100%; }
+  .ml-field input{
+    width:100%; background:rgba(255,255,255,.1); border:1.5px solid rgba(255,255,255,.2);
+    color:var(--white); font-family:'Epilogue',sans-serif; font-size:1rem;
+    padding:.95rem 1.2rem; border-radius:2px; margin-bottom:.7rem; transition:border-color .2s;
+  }
+  .ml-field input:focus{ outline:none; border-color:var(--lime); }
+  .ml-field input::placeholder{ color:rgba(255,255,255,.35); }
+  .form-btn{ width:100%; }
+  .smallprint{ color:rgba(242,240,235,.5); font-size:.8rem; margin-top:1rem; text-align:center; font-weight:300; }
+
+  .restart{ display:inline-block; margin-top:2rem; color:var(--muted); font-size:.9rem; text-decoration:none; border-bottom:1px solid var(--rule); padding-bottom:2px; }
+  .restart:hover{ color:var(--ink); }
+
+  @media (max-width:480px){
+    .wrap{ justify-content:flex-start; padding-top:40px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ============ INTRO ============ -->
+  <div class="step active" id="intro" data-step="intro">
+    <div class="label">60-Sekunden-Check · keine Diagnose</div>
+    <h1>Welcher Treibstoff fehlt <em>deinem</em> Gehirn?</h1>
+    <p class="lede">Sechs Fragen. Kein Test, keine Bewertung. Nur ein Spiegel. Am Ende erfährst du, worauf dein Gehirn wirklich anspringt.</p>
+    <div class="nav" style="justify-content:flex-start;">
+      <button class="btn" id="start">Los geht's →</button>
+    </div>
+    <p class="hint">Du musst nichts „richtig" machen. Wähl einfach, was sich am ehesten nach dir anfühlt.</p>
+  </div>
+
+  <!-- ============ QUESTIONS (injected) ============ -->
+  <div id="quiz"></div>
+
+  <!-- ============ RESULT ============ -->
+  <div class="step" id="result" data-step="result">
+    <div class="progress" id="prog-done"></div>
+    <div class="badge" id="r-badge">Dein Profil</div>
+    <div class="rtitle" id="r-title"></div>
+    <p class="rbody" id="r-body"></p>
+
+    <div class="card">
+      <div class="card-label">Dein kostenloser Mini-Guide</div>
+      <h3>Dopamin verstehen</h3>
+      <p>Dieser Guide erklärt dir in wenigen Minuten, warum Disziplin allein für dein Gehirn nicht funktioniert, und was wirklich hilft. Sag mir, wohin ich ihn schicken darf:</p>
+
+      <!-- An MailerLite angebunden (Konto 2344410, Formular 188998330294994691).
+           Die zwei versteckten Felder unten übergeben Typ + Antworten. -->
+      <form id="signup" novalidate>
+        <div class="ml-field">
+          <input type="text" name="name" placeholder="Dein Vorname (optional)" autocomplete="given-name" />
+        </div>
+        <div class="ml-field">
+          <input type="email" name="email" placeholder="Deine E-Mail-Adresse" autocomplete="email" required />
+        </div>
+        <input type="hidden" name="quiz_typ" id="f-typ" value="" />
+        <input type="hidden" name="quiz_antworten" id="f-ans" value="" />
+        <button class="btn-lime form-btn" type="submit">Guide an mich schicken →</button>
+      </form>
+      <p class="smallprint">Kein Spam. Jederzeit abmeldbar. Sofort in deinem Postfach.</p>
+    </div>
+
+    <a class="restart" id="restart" href="#">Quiz neu starten</a>
+  </div>
+
+</div>
+
+<script>
+/* ================================================================
+   QUIZ-DATEN: 5 Typen: interesse · dringlichkeit · herausforderung
+   · bedeutung · neuheit
+   ================================================================ */
+const QUESTIONS = [
+  {
+    q: "Du sollst etwas Wichtiges anfangen. Was passiert in dir?",
+    a: [
+      { t:"Ich weiß, es ist wichtig, und trotzdem bewegt sich nichts.", k:"dringlichkeit" },
+      { t:"Wenn es mich nicht interessiert, fühlt es sich wie eine Wand an.", k:"interesse" },
+      { t:"Ich brauche erst einen Funken Spannung, sonst startet nichts.", k:"herausforderung" },
+    ]
+  },
+  {
+    q: "Wann funktionierst du am besten?",
+    a: [
+      { t:"Kurz vor Deadline, wenn der Druck echt wird.", k:"dringlichkeit" },
+      { t:"Wenn das Thema mich wirklich packt.", k:"interesse" },
+      { t:"Wenn etwas neu ist und ich es noch nicht kenne.", k:"neuheit" },
+      { t:"Wenn es mir persönlich etwas bedeutet.", k:"bedeutung" },
+    ]
+  },
+  {
+    q: "Was raubt dir am schnellsten die Motivation?",
+    a: [
+      { t:"Wenn etwas langweilig oder repetitiv wird.", k:"neuheit" },
+      { t:"Wenn ich den Sinn dahinter nicht spüre.", k:"bedeutung" },
+      { t:"Wenn keine echte Herausforderung drin ist.", k:"herausforderung" },
+      { t:"Wenn nichts dringt, alles „kann ja später“.", k:"dringlichkeit" },
+    ]
+  },
+  {
+    q: "Du hast einen ganzen freien Tag. Was zieht dich am ehesten in einen Flow?",
+    a: [
+      { t:"Ein Thema, in das ich mich verlieren kann.", k:"interesse" },
+      { t:"Etwas Neues ausprobieren, das ich noch nie gemacht habe.", k:"neuheit" },
+      { t:"Ein kniffliges Problem, das mich fordert.", k:"herausforderung" },
+    ]
+  },
+  {
+    q: "Welcher Satz trifft dich am meisten?",
+    a: [
+      { t:"„Warum kann ich das nicht einfach machen?“", k:"dringlichkeit" },
+      { t:"„Mir ist langweilig, also bin ich raus.“", k:"neuheit" },
+      { t:"„Wenn es mir nichts bedeutet, kann ich mich nicht zwingen.“", k:"bedeutung" },
+    ]
+  },
+  {
+    q: "Stell dir vor, eine Aufgabe wäre genau richtig für dich. Was hätte sie?",
+    a: [
+      { t:"Sie wäre fesselnd interessant.", k:"interesse" },
+      { t:"Sie hätte einen echten, spürbaren Sinn.", k:"bedeutung" },
+      { t:"Sie wäre eine Herausforderung auf meinem Level.", k:"herausforderung" },
+      { t:"Sie hätte einen klaren, nahen Zeitpunkt.", k:"dringlichkeit" },
+    ]
+  },
+];
+
+const TYPES = {
+  interesse: {
+    label: "Der Interesse-Typ",
+    title: "Dein Treibstoff ist <em>Interesse.</em>",
+    body: "Dein Gehirn springt nicht auf „wichtig“ an, sondern auf <strong>„faszinierend“</strong>. Wenn ein Thema dich packt, kannst du stundenlang dranbleiben. Wenn nicht, fühlt sich selbst die kleinste Aufgabe wie eine Wand an. Das ist kein Disziplinproblem. Dein Antrieb läuft über Neugier, nicht über Pflicht."
+  },
+  dringlichkeit: {
+    label: "Der Dringlichkeits-Typ",
+    title: "Dein Treibstoff ist <em>Dringlichkeit.</em>",
+    body: "Dein Gehirn wacht auf, wenn es <strong>jetzt</strong> zählt. Lange Vorläufe und „irgendwann“-Aufgaben erreichen dich kaum, aber kurz vor knapp wird plötzlich alles möglich. Du bist nicht faul. Dein System braucht einen spürbaren Moment des Jetzt, um in Bewegung zu kommen."
+  },
+  herausforderung: {
+    label: "Der Herausforderungs-Typ",
+    title: "Dein Treibstoff ist <em>Herausforderung.</em>",
+    body: "Zu leicht ist für dich dasselbe wie langweilig, und Langeweile schaltet deinen Antrieb ab. Dein Gehirn will einen Widerstand, an dem es sich reiben kann. <strong>Reiz entsteht durch Schwierigkeit</strong>, nicht durch Wichtigkeit. Sobald etwas dich fordert, bist du voll da."
+  },
+  bedeutung: {
+    label: "Der Bedeutungs-Typ",
+    title: "Dein Treibstoff ist <em>Bedeutung.</em>",
+    body: "Du kannst dich nicht zu etwas zwingen, das sich sinnlos anfühlt, egal wie „wichtig“ es offiziell ist. Aber wenn etwas dir <strong>persönlich etwas bedeutet</strong>, ist der Antrieb plötzlich da. Dein Gehirn arbeitet über emotionale Verbindung, nicht über Druck von außen."
+  },
+  neuheit: {
+    label: "Der Neuheits-Typ",
+    title: "Dein Treibstoff ist <em>Neuheit.</em>",
+    body: "Neues zündet bei dir sofort, und genau dann, wenn die Routine einsetzt, kippt die Motivation. Das macht dich nicht unzuverlässig. Dein Gehirn läuft auf <strong>Frische und Abwechslung</strong>. Sobald etwas vorhersehbar wird, sucht dein System den nächsten Reiz."
+  },
+};
+
+/* ================================================================ */
+const quizEl = document.getElementById('quiz');
+const state = { idx:-1, answers:[] };
+
+QUESTIONS.forEach((Q, i) => {
+  const step = document.createElement('div');
+  step.className = 'step';
+  step.dataset.step = i;
+  const prog = QUESTIONS.map((_,j)=>`<span data-p="${j}"></span>`).join('');
+  const opts = Q.a.map((o,oi)=>`
+    <button class="opt" data-k="${o.k}" data-oi="${oi}">
+      <span class="dot"></span><span>${o.t}</span>
+    </button>`).join('');
+  step.innerHTML = `
+    <div class="progress">${prog}</div>
+    <div class="qnum">Frage ${i+1} von ${QUESTIONS.length}</div>
+    <div class="qtext">${Q.q}</div>
+    <div class="options">${opts}</div>
+    <div class="nav">
+      <button class="back" data-back ${i===0?'hidden':''}>← Zurück</button>
+      <button class="btn next" data-next disabled>Weiter →</button>
+    </div>`;
+  quizEl.appendChild(step);
+});
+
+const steps = [...document.querySelectorAll('.step')];
+function show(name){
+  steps.forEach(s=>s.classList.toggle('active', s.dataset.step==String(name)));
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+document.getElementById('start').addEventListener('click', ()=>{ state.idx=0; show(0); paintProgress(0); });
+
+quizEl.addEventListener('click', (e)=>{
+  const opt = e.target.closest('.opt');
+  const next = e.target.closest('[data-next]');
+  const back = e.target.closest('[data-back]');
+  const stepEl = e.target.closest('.step');
+  if(!stepEl) return;
+  const i = Number(stepEl.dataset.step);
+
+  if(opt){
+    stepEl.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel'));
+    opt.classList.add('sel');
+    state.answers[i] = { k:opt.dataset.k, t:QUESTIONS[i].a[Number(opt.dataset.oi)].t };
+    stepEl.querySelector('[data-next]').disabled = false;
+  }
+  if(next && !next.disabled){
+    if(i < QUESTIONS.length-1){ state.idx=i+1; show(i+1); paintProgress(i+1); }
+    else finish();
+  }
+  if(back){
+    if(i>0){ state.idx=i-1; show(i-1); paintProgress(i-1); }
+    else show('intro');
+  }
+});
+
+function paintProgress(activeIdx){
+  document.querySelectorAll('.step[data-step] .progress').forEach(p=>{
+    p.querySelectorAll('span').forEach(s=>{
+      s.classList.toggle('done', Number(s.dataset.p) <= activeIdx);
+    });
+  });
+}
+
+(function syncLastBtn(){
+  const last = QUESTIONS.length-1;
+  const b = document.querySelector(`.step[data-step="${last}"] [data-next]`);
+  if(b) b.textContent = "Mein Ergebnis →";
+})();
+
+function finish(){
+  const tally = {};
+  state.answers.forEach(a=>{ if(a) tally[a.k]=(tally[a.k]||0)+1; });
+  let topKey = 'interesse', topN = -1;
+  const order = state.answers.filter(Boolean).map(a=>a.k);
+  Object.keys(tally).forEach(k=>{
+    if(tally[k]>topN || (tally[k]===topN && order.indexOf(k)<order.indexOf(topKey))){
+      topN=tally[k]; topKey=k;
+    }
+  });
+  const type = TYPES[topKey];
+  document.getElementById('r-badge').textContent = type.label;
+  document.getElementById('r-title').innerHTML = type.title;
+  document.getElementById('r-body').innerHTML = type.body;
+  document.getElementById('f-typ').value = topKey;
+  document.getElementById('f-ans').value = order.join(',');
+  document.getElementById('prog-done').innerHTML = QUESTIONS.map(()=>`<span class="done"></span>`).join('');
+  show('result');
+}
+
+/* ================================================================
+   MAILERLITE-ANBINDUNG
+   Konto 2344410 · Formular 188998330294994691
+   Sendet E-Mail, Name und die Quiz-Felder an MailerLite.
+   ================================================================ */
+const ML_ENDPOINT = "https://assets.mailerlite.com/jsonp/2344410/forms/188998330294994691/subscribe";
+
+document.getElementById('signup').addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  const form = e.target;
+  const email = form.email.value.trim();
+  if(!email || !email.includes('@')){ form.email.focus(); return; }
+
+  const btn = form.querySelector('button[type="submit"]');
+  const orig = btn.textContent;
+  btn.textContent = "Wird gesendet …";
+  btn.disabled = true;
+
+  const data = new URLSearchParams();
+  data.append('fields[email]', email);
+  data.append('fields[name]', form.name.value.trim());
+  data.append('fields[quiz_typ]', document.getElementById('f-typ').value);
+  data.append('fields[quiz_antworten]', document.getElementById('f-ans').value);
+  data.append('ml-submit', '1');
+  data.append('anticsrf', 'true');
+
+  try{
+    await fetch(ML_ENDPOINT, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: data.toString()
+    });
+  }catch(err){ /* no-cors: Antwort ist undurchsichtig, das ist normal */ }
+
+  // Erfolg anzeigen (no-cors erlaubt kein Auslesen der Antwort, daher optimistisch)
+  form.innerHTML = `<p style="color:var(--lime);font-family:'Syne',sans-serif;font-weight:700;font-size:1.3rem;">✓ Der Guide ist unterwegs!</p><p style="color:rgba(242,240,235,.75);margin-top:8px;font-weight:300;">Schau gleich in dein Postfach.</p>`;
+});
+
+document.getElementById('restart').addEventListener('click', (e)=>{
+  e.preventDefault();
+  state.idx=-1; state.answers=[];
+  document.querySelectorAll('.opt.sel').forEach(o=>o.classList.remove('sel'));
+  document.querySelectorAll('[data-next]').forEach(b=>b.disabled=true);
+  show('intro');
+});
+</script>
+</body>
+</html>
