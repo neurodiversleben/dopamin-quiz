@@ -3,6 +3,25 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1850603119282068');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1850603119282068&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+
 <title>Welcher Treibstoff fehlt deinem Gehirn? - Neurodiversleben</title>
 <meta name="description" content="Ein kurzer Selbst-Check für neurodivergente Gehirne. Keine Diagnose, keine Bewertung. Nur ein Spiegel. In 60 Sekunden." />
 
@@ -339,7 +358,10 @@ function show(name){
   window.scrollTo({top:0, behavior:'smooth'});
 }
 
-document.getElementById('start').addEventListener('click', ()=>{ state.idx=0; show(0); paintProgress(0); });
+document.getElementById('start').addEventListener('click', ()=>{
+  if (typeof fbq === 'function') { fbq('trackCustom', 'QuizStart', { content_name: 'Dopamin Quiz' }); }
+  state.idx=0; show(0); paintProgress(0);
+});
 
 quizEl.addEventListener('click', (e)=>{
   const opt = e.target.closest('.opt');
@@ -433,6 +455,12 @@ document.getElementById('signup').addEventListener('submit', async (e)=>{
       body: data.toString()
     });
   }catch(err){ /* no-cors: Antwort ist undurchsichtig, das ist normal */ }
+
+  // Facebook melden: diese Person hat sich angemeldet (Lead).
+  // Der Quiz-Typ wird als Zusatzinfo mitgegeben.
+  if (typeof fbq === 'function') {
+    fbq('track', 'Lead', { content_name: 'Dopamin Quiz', quiz_typ: document.getElementById('f-typ').value });
+  }
 
   // Erfolg anzeigen (no-cors erlaubt kein Auslesen der Antwort, daher optimistisch)
   form.innerHTML = `<p style="color:var(--lime);font-family:'Syne',sans-serif;font-weight:700;font-size:1.3rem;">✓ Fast geschafft!</p><p style="color:rgba(242,240,235,.85);margin-top:10px;font-weight:300;">Ich habe dir gerade eine <strong style="color:var(--white);font-weight:500;">Bestätigungs-Mail</strong> geschickt. Öffne sie und klick auf den Bestätigungs-Link, dann ist dein Guide sofort unterwegs.</p><p style="color:rgba(242,240,235,.55);margin-top:10px;font-weight:300;font-size:.9rem;">Schau auch im Spam-Ordner nach, falls nichts ankommt.</p>`;
