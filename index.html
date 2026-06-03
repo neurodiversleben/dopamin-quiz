@@ -249,7 +249,7 @@ const QUESTIONS = [
   {
     q: "Du sollst etwas Wichtiges anfangen. Was passiert in dir?",
     a: [
-      { t:"Ich weiß, es ist wichtig, und trotzdem bewegt sich nichts.", k:"dringlichkeit" },
+      { t:"Ich weiß, es ist wichtig, aber ich hab ja noch Zeit, bis es wirklich sein muss. Also bewegt sich nichts in mir.", k:"dringlichkeit" },
       { t:"Wenn es mich nicht interessiert, fühlt es sich wie eine Wand an.", k:"interesse" },
       { t:"Ich brauche erst einen Funken Spannung, sonst startet nichts.", k:"herausforderung" },
     ]
@@ -258,24 +258,24 @@ const QUESTIONS = [
     q: "Wann funktionierst du am besten?",
     a: [
       { t:"Kurz vor Deadline, wenn der Druck echt wird.", k:"dringlichkeit" },
-      { t:"Wenn das Thema mich wirklich packt.", k:"interesse" },
+      { t:"Wenn das Thema mich so packt, dass ich nicht mehr aufhören will.", k:"interesse" },
       { t:"Wenn etwas neu ist und ich es noch nicht kenne.", k:"neuheit" },
-      { t:"Wenn es mir persönlich etwas bedeutet.", k:"bedeutung" },
+      { t:"Wenn es mir etwas bedeutet, auch wenn die Sache selbst mich nicht fesselt.", k:"bedeutung" },
     ]
   },
   {
     q: "Was raubt dir am schnellsten die Motivation?",
     a: [
       { t:"Wenn etwas langweilig oder repetitiv wird.", k:"neuheit" },
-      { t:"Wenn ich den Sinn dahinter nicht spüre.", k:"bedeutung" },
+      { t:"Wenn ich nicht spüre, wofür das Ganze gut sein soll.", k:"bedeutung" },
       { t:"Wenn keine echte Herausforderung drin ist.", k:"herausforderung" },
-      { t:"Wenn nichts dringt, alles „kann ja später“.", k:"dringlichkeit" },
+      { t:"Wenn gar keine Dringlichkeit da ist, alles „kann ja später“.", k:"dringlichkeit" },
     ]
   },
   {
     q: "Du hast einen ganzen freien Tag. Was zieht dich am ehesten in einen Flow?",
     a: [
-      { t:"Ein Thema, in das ich mich verlieren kann.", k:"interesse" },
+      { t:"Ein Thema, das mich so fasziniert, dass ich die Zeit vergesse.", k:"interesse" },
       { t:"Etwas Neues ausprobieren, das ich noch nie gemacht habe.", k:"neuheit" },
       { t:"Ein kniffliges Problem, das mich fordert.", k:"herausforderung" },
     ]
@@ -291,10 +291,10 @@ const QUESTIONS = [
   {
     q: "Stell dir vor, eine Aufgabe wäre genau richtig für dich. Was hätte sie?",
     a: [
-      { t:"Sie wäre fesselnd interessant.", k:"interesse" },
-      { t:"Sie hätte einen echten, spürbaren Sinn.", k:"bedeutung" },
+      { t:"Sie würde mich fesseln, einfach weil das Thema spannend ist.", k:"interesse" },
+      { t:"Sie hätte einen Sinn, der mir wichtig ist, auch wenn sie nicht spannend wäre.", k:"bedeutung" },
       { t:"Sie wäre eine Herausforderung auf meinem Level.", k:"herausforderung" },
-      { t:"Sie hätte einen klaren, nahen Zeitpunkt.", k:"dringlichkeit" },
+      { t:"Sie hätte eine klar definierte Deadline.", k:"dringlichkeit" },
     ]
   },
 ];
@@ -303,7 +303,7 @@ const TYPES = {
   interesse: {
     label: "Der Interesse-Typ",
     title: "Dein Treibstoff ist <em>Interesse.</em>",
-    body: "Dein Gehirn springt nicht auf „wichtig“ an, sondern auf <strong>„faszinierend“</strong>. Wenn ein Thema dich packt, kannst du stundenlang dranbleiben. Wenn nicht, fühlt sich selbst die kleinste Aufgabe wie eine Wand an. Das ist kein Disziplinproblem. Dein Antrieb läuft über Neugier, nicht über Pflicht."
+    body: "Dein Gehirn springt nicht auf „wichtig“ an, sondern auf <strong>„faszinierend“</strong>. Wenn ein Thema dich packt, kannst du stundenlang dranbleiben, ganz von selbst. Wenn nicht, fühlt sich selbst die kleinste Aufgabe wie eine Wand an. Es geht dir um die Sache selbst, nicht darum, wofür sie gut ist. Das ist kein Disziplinproblem, dein Antrieb läuft über Neugier, nicht über Pflicht."
   },
   dringlichkeit: {
     label: "Der Dringlichkeits-Typ",
@@ -318,7 +318,7 @@ const TYPES = {
   bedeutung: {
     label: "Der Bedeutungs-Typ",
     title: "Dein Treibstoff ist <em>Bedeutung.</em>",
-    body: "Du kannst dich nicht zu etwas zwingen, das sich sinnlos anfühlt, egal wie „wichtig“ es offiziell ist. Aber wenn etwas dir <strong>persönlich etwas bedeutet</strong>, ist der Antrieb plötzlich da. Dein Gehirn arbeitet über emotionale Verbindung, nicht über Druck von außen."
+    body: "Bei dir muss die Sache nicht spannend sein, sie muss <strong>einen Sinn haben</strong>. Du kannst dich nicht zu etwas zwingen, das sich sinnlos anfühlt, egal wie „wichtig“ es offiziell ist. Aber sobald du spürst, wofür etwas gut ist oder dass es jemandem hilft, ist der Antrieb da, auch wenn die Aufgabe selbst dich nicht fesselt. Dein Gehirn arbeitet über Werte und Verbindung, nicht über Druck von außen."
   },
   neuheit: {
     label: "Der Neuheits-Typ",
